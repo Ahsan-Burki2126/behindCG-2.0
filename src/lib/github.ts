@@ -16,11 +16,20 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN || "";
 const GITHUB_OWNER = process.env.GITHUB_OWNER || "";
 const GITHUB_REPO = process.env.GITHUB_REPO || "";
 const GITHUB_BRANCH = process.env.GITHUB_BRANCH || "Ahsan-Burki";
+const GITHUB_BASE_PATH = process.env.GITHUB_BASE_PATH || "behindcg";
 
 const API_BASE = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`;
 
 export function isGitHubConfigured(): boolean {
   return !!(GITHUB_TOKEN && GITHUB_OWNER && GITHUB_REPO);
+}
+
+/** Prefix a path with the base path (e.g. "behindcg/") if configured */
+function fullPath(relativePath: string): string {
+  if (GITHUB_BASE_PATH) {
+    return `${GITHUB_BASE_PATH}/${relativePath}`;
+  }
+  return relativePath;
 }
 
 function headers() {
@@ -47,7 +56,8 @@ interface GitHubFileResponse {
 export async function ghReadFile(
   filePath: string,
 ): Promise<{ content: string; sha: string } | null> {
-  const url = `${API_BASE}/contents/${filePath}?ref=${GITHUB_BRANCH}`;
+  const repoPath = fullPath(filePath);
+  const url = `${API_BASE}/contents/${repoPath}?ref=${GITHUB_BRANCH}`;
   const res = await fetch(url, { headers: headers(), cache: "no-store" });
 
   if (!res.ok) {
@@ -85,6 +95,7 @@ export async function ghWriteFile(
   content: string | Buffer,
   message: string,
 ): Promise<{ sha: string }> {
+  const repoPath = fullPath(filePath);
   // Get current SHA if file exists (needed for updates)
   const existing = await ghReadFile(filePath);
 
@@ -102,7 +113,7 @@ export async function ghWriteFile(
     body.sha = existing.sha;
   }
 
-  const url = `${API_BASE}/contents/${filePath}`;
+  const url = `${API_BASE}/contents/${repoPath}`;
   const res = await fetch(url, {
     method: "PUT",
     headers: headers(),
@@ -140,10 +151,11 @@ export async function ghDeleteFile(
   filePath: string,
   message?: string,
 ): Promise<boolean> {
+  const repoPath = fullPath(filePath);
   const existing = await ghReadFile(filePath);
   if (!existing) return false;
 
-  const url = `${API_BASE}/contents/${filePath}`;
+  const url = `${API_BASE}/contents/${repoPath}`;
   const res = await fetch(url, {
     method: "DELETE",
     headers: headers(),
@@ -168,7 +180,8 @@ interface GitHubDirEntry {
 }
 
 export async function ghListDir(dirPath: string): Promise<GitHubDirEntry[]> {
-  const url = `${API_BASE}/contents/${dirPath}?ref=${GITHUB_BRANCH}`;
+  const repoPath = fullPath(dirPath);
+  const url = `${API_BASE}/contents/${repoPath}?ref=${GITHUB_BRANCH}`;
   const res = await fetch(url, { headers: headers(), cache: "no-store" });
 
   if (!res.ok) {

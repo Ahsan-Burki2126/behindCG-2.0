@@ -19,8 +19,9 @@ export async function PUT(req: Request) {
     const data = await req.json();
     await setContentAsync(data);
     return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json({ error: "Invalid data" }, { status: 400 });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Invalid data";
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }
 
@@ -34,7 +35,8 @@ export async function PATCH(req: Request) {
     const merged = { ...current, ...updates };
     await setContentAsync(merged);
     return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json({ error: "Invalid data" }, { status: 400 });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Invalid data";
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 }
