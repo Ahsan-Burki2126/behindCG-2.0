@@ -64,10 +64,7 @@ export async function ghReadFile(
 /**
  * Read a JSON file from the repo, returning parsed data or fallback.
  */
-export async function ghReadJSON<T>(
-  filePath: string,
-  fallback: T,
-): Promise<T> {
+export async function ghReadJSON<T>(filePath: string, fallback: T): Promise<T> {
   try {
     const result = await ghReadFile(filePath);
     if (!result) return fallback;
@@ -170,9 +167,7 @@ interface GitHubDirEntry {
   sha: string;
 }
 
-export async function ghListDir(
-  dirPath: string,
-): Promise<GitHubDirEntry[]> {
+export async function ghListDir(dirPath: string): Promise<GitHubDirEntry[]> {
   const url = `${API_BASE}/contents/${dirPath}?ref=${GITHUB_BRANCH}`;
   const res = await fetch(url, { headers: headers(), cache: "no-store" });
 

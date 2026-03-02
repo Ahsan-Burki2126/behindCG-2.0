@@ -1,10 +1,6 @@
 import fs from "fs";
 import path from "path";
-import {
-  isGitHubConfigured,
-  ghReadJSON,
-  ghWriteJSON,
-} from "@/lib/github";
+import { isGitHubConfigured, ghReadJSON, ghWriteJSON } from "@/lib/github";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const isProduction = process.env.NODE_ENV === "production";
