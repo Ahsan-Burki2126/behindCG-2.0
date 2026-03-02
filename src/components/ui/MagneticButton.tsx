@@ -8,12 +8,14 @@ interface MagneticButtonProps {
   className?: string;
   onClick?: () => void;
   href?: string;
+  disabled?: boolean;
 }
 
 export default function MagneticButton({
   children,
   className = "",
   onClick,
+  disabled,
 }: MagneticButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [transform, setTransform] = useState({ x: 0, y: 0 });
@@ -50,6 +52,7 @@ export default function MagneticButton({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
+      disabled={disabled}
       data-cursor-hover
     >
       {children}

@@ -114,3 +114,39 @@ export function getProducts(): Product[] {
 export function setProducts(data: Product[]): void {
   writeJSON("products.json", data);
 }
+
+// ── Contact Messages ─────────────────────────────────────────────
+
+export interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  projectType: string;
+  budget: string;
+  message: string;
+  createdAt: string;
+  read: boolean;
+}
+
+export function getMessages(): ContactMessage[] {
+  return readJSON<ContactMessage[]>("messages.json", []);
+}
+
+export function setMessages(data: ContactMessage[]): void {
+  writeJSON("messages.json", data);
+}
+
+export function addMessage(
+  msg: Omit<ContactMessage, "id" | "createdAt" | "read">,
+): ContactMessage {
+  const messages = getMessages();
+  const newMsg: ContactMessage = {
+    ...msg,
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+    createdAt: new Date().toISOString(),
+    read: false,
+  };
+  messages.unshift(newMsg);
+  setMessages(messages);
+  return newMsg;
+}

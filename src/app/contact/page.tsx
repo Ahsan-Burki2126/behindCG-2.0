@@ -11,6 +11,15 @@ export default function ContactPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const envelopeRef = useRef<HTMLDivElement>(null);
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    projectType: "",
+    budget: "",
+    message: "",
+  });
   const content = useContent();
   const c = content?.contact;
   const tagline = c?.tagline ?? "Get in Touch";
@@ -55,21 +64,39 @@ export default function ContactPage() {
     );
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    setSending(true);
 
-    if (envelopeRef.current) {
-      gsap.to(envelopeRef.current, {
-        y: -200,
-        scale: 0,
-        opacity: 0,
-        rotateX: 180,
-        duration: 1,
-        ease: "power3.in",
-        onComplete: () => setSent(true),
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
-    } else {
-      setSent(true);
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to send message");
+      }
+
+      if (envelopeRef.current) {
+        gsap.to(envelopeRef.current, {
+          y: -200,
+          scale: 0,
+          opacity: 0,
+          rotateX: 180,
+          duration: 1,
+          ease: "power3.in",
+          onComplete: () => setSent(true),
+        });
+      } else {
+        setSent(true);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+      setSending(false);
     }
   };
 
@@ -145,6 +172,10 @@ export default function ContactPage() {
                   <input
                     type="text"
                     required
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-[var(--space-2)] py-[17px] text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 transition-colors"
                     placeholder="Your name"
                   />
@@ -156,6 +187,10 @@ export default function ContactPage() {
                   <input
                     type="email"
                     required
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-[var(--space-2)] py-[17px] text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 transition-colors"
                     placeholder="you@email.com"
                   />
@@ -166,7 +201,13 @@ export default function ContactPage() {
                 <label className="block text-sm text-foreground/40 font-mono mb-[var(--space-1)]">
                   Project Type
                 </label>
-                <select className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-[var(--space-2)] py-[17px] text-foreground focus:outline-none focus:border-accent/50 transition-colors">
+                <select
+                  value={formData.projectType}
+                  onChange={(e) =>
+                    setFormData({ ...formData, projectType: e.target.value })
+                  }
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-[var(--space-2)] py-[17px] text-foreground focus:outline-none focus:border-accent/50 transition-colors"
+                >
                   <option value="">Select a service</option>
                   <option value="product-viz">Product Visualization</option>
                   <option value="animation">3D Animation</option>
@@ -180,7 +221,13 @@ export default function ContactPage() {
                 <label className="block text-sm text-foreground/40 font-mono mb-[var(--space-1)]">
                   Budget Range
                 </label>
-                <select className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-[var(--space-2)] py-[17px] text-foreground focus:outline-none focus:border-accent/50 transition-colors">
+                <select
+                  value={formData.budget}
+                  onChange={(e) =>
+                    setFormData({ ...formData, budget: e.target.value })
+                  }
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-[var(--space-2)] py-[17px] text-foreground focus:outline-none focus:border-accent/50 transition-colors"
+                >
                   <option value="">Select a range</option>
                   <option value="1k-5k">$1,000 – $5,000</option>
                   <option value="5k-15k">$5,000 – $15,000</option>
@@ -195,14 +242,27 @@ export default function ContactPage() {
                 <textarea
                   required
                   rows={5}
+                  value={formData.message}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
                   className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-[var(--space-2)] py-[17px] text-foreground placeholder:text-foreground/20 focus:outline-none focus:border-accent/50 transition-colors resize-none"
                   placeholder="Tell me about your project..."
                 />
               </div>
 
+              {error && (
+                <div className="form-field">
+                  <p className="text-red-400 text-sm text-center">{error}</p>
+                </div>
+              )}
+
               <div className="form-field pt-[var(--space-1)]">
-                <MagneticButton className="w-full text-center">
-                  Send Message
+                <MagneticButton
+                  className="w-full text-center"
+                  disabled={sending}
+                >
+                  {sending ? "Sending..." : "Send Message"}
                 </MagneticButton>
               </div>
             </form>
