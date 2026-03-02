@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { isAuthenticated } from "@/lib/auth";
-import { getMessages, setMessages } from "@/lib/data";
+import { getMessagesAsync, setMessagesAsync } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
@@ -9,7 +9,7 @@ export async function GET() {
   if (!(await isAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const messages = getMessages();
+  const messages = await getMessagesAsync();
   return NextResponse.json(messages, {
     headers: { "Cache-Control": "no-store, no-cache, must-revalidate" },
   });
@@ -22,13 +22,13 @@ export async function PATCH(req: Request) {
   }
   try {
     const { id, read } = await req.json();
-    const messages = getMessages();
+    const messages = await getMessagesAsync();
     const idx = messages.findIndex((m) => m.id === id);
     if (idx === -1) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
     messages[idx].read = read;
-    setMessages(messages);
+    await setMessagesAsync(messages);
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ error: "Invalid data" }, { status: 400 });
@@ -42,12 +42,12 @@ export async function DELETE(req: Request) {
   }
   try {
     const { id } = await req.json();
-    const messages = getMessages();
+    const messages = await getMessagesAsync();
     const filtered = messages.filter((m) => m.id !== id);
     if (filtered.length === messages.length) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
-    setMessages(filtered);
+    await setMessagesAsync(filtered);
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ error: "Invalid data" }, { status: 400 });

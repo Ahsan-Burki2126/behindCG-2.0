@@ -2,8 +2,15 @@ import { NextResponse } from "next/server";
 import { isAuthenticated } from "@/lib/auth";
 import fs from "fs";
 import path from "path";
+import {
+  isGitHubConfigured,
+  ghWriteFile,
+  ghListDir,
+  ghDeleteFile,
+} from "@/lib/github";
 
 export const dynamic = "force-dynamic";
+const isProduction = process.env.NODE_ENV === "production";
 
 export async function POST(req: Request) {
   if (!(await isAuthenticated())) {
@@ -52,23 +59,31 @@ export async function POST(req: Request) {
       );
     }
 
-    // Ensure directory exists
-    const uploadDir = path.join(process.cwd(), "public", folder);
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-
     // Generate unique filename
     const timestamp = Date.now();
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
     const filename = `${timestamp}_${safeName}`;
-    const filePath = path.join(uploadDir, filename);
-
-    // Write file
-    const buffer = Buffer.from(await file.arrayBuffer());
-    fs.writeFileSync(filePath, buffer);
-
     const publicPath = `/${folder}/${filename}`;
+
+    const buffer = Buffer.from(await file.arrayBuffer());
+
+    if (isProduction && isGitHubConfigured()) {
+      // Write to GitHub repo
+      await ghWriteFile(
+        `public/${folder}/${filename}`,
+        buffer,
+        `Upload ${filename} via admin panel`,
+      );
+    } else {
+      // Write to local filesystem
+      const uploadDir = path.join(process.cwd(), "public", folder);
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
+      const filePath = path.join(uploadDir, filename);
+      fs.writeFileSync(filePath, buffer);
+    }
+
     return NextResponse.json({ success: true, path: publicPath, filename });
   } catch {
     return NextResponse.json({ error: "Upload failed" }, { status: 500 });
@@ -82,8 +97,25 @@ export async function GET(req: Request) {
 
   const { searchParams } = new URL(req.url);
   const folder = searchParams.get("folder") || "uploads";
-  const dir = path.join(process.cwd(), "public", folder);
 
+  if (isProduction && isGitHubConfigured()) {
+    try {
+      const entries = await ghListDir(`public/${folder}`);
+      const files = entries
+        .filter((e) => e.type === "file")
+        .map((e) => ({
+          name: e.name,
+          path: `/${folder}/${e.name}`,
+          size: e.size,
+          modified: "",
+        }));
+      return NextResponse.json({ files });
+    } catch {
+      return NextResponse.json({ files: [] });
+    }
+  }
+
+  const dir = path.join(process.cwd(), "public", folder);
   if (!fs.existsSync(dir)) {
     return NextResponse.json({ files: [] });
   }
@@ -108,12 +140,23 @@ export async function DELETE(req: Request) {
 
   try {
     const { filePath: relativePath } = await req.json();
-    const fullPath = path.join(process.cwd(), "public", relativePath);
 
+    if (isProduction && isGitHubConfigured()) {
+      const ghPath = `public${relativePath}`;
+      const deleted = await ghDeleteFile(
+        ghPath,
+        `Delete ${relativePath} via admin panel`,
+      );
+      if (!deleted) {
+        return NextResponse.json({ error: "File not found" }, { status: 404 });
+      }
+      return NextResponse.json({ success: true });
+    }
+
+    const fullPath = path.join(process.cwd(), "public", relativePath);
     if (!fs.existsSync(fullPath)) {
       return NextResponse.json({ error: "File not found" }, { status: 404 });
     }
-
     fs.unlinkSync(fullPath);
     return NextResponse.json({ success: true });
   } catch {

@@ -24,7 +24,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const saved = addMessage({
+    const saved = await addMessage({
       name: String(name).slice(0, 200),
       email: String(email).slice(0, 200),
       projectType: String(projectType || "").slice(0, 100),

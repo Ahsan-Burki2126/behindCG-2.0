@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import { isAuthenticated } from "@/lib/auth";
-import { getContent, setContent } from "@/lib/data";
+import { getContentAsync, setContentAsync } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const content = getContent();
+  const content = await getContentAsync();
   return NextResponse.json(content, {
     headers: { "Cache-Control": "no-store, no-cache, must-revalidate" },
   });
@@ -17,7 +17,7 @@ export async function PUT(req: Request) {
   }
   try {
     const data = await req.json();
-    setContent(data);
+    await setContentAsync(data);
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ error: "Invalid data" }, { status: 400 });
@@ -30,9 +30,9 @@ export async function PATCH(req: Request) {
   }
   try {
     const updates = await req.json();
-    const current = getContent();
+    const current = await getContentAsync();
     const merged = { ...current, ...updates };
-    setContent(merged);
+    await setContentAsync(merged);
     return NextResponse.json({ success: true });
   } catch {
     return NextResponse.json({ error: "Invalid data" }, { status: 400 });

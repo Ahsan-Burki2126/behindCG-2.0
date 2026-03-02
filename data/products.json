@@ -1,28 +1,5 @@
 [
   {
-    "id": "1",
-    "title": "Crystal Sphere Pack",
-    "price": "$29",
-    "category": "3D Model",
-    "format": "GLB / FBX / BLEND",
-    "polycount": "12,400 tris",
-    "description": "A collection of beautifully crafted crystal sphere 3D models with procedural materials, subsurface scattering, and caustic-ready geometry. Perfect for product visualization, abstract art, and game environments.",
-    "model": {
-      "variant": "sphere",
-      "color": "#0a1a1a",
-      "wireColor": "#14b8a6",
-      "distort": true
-    },
-    "specs": [
-      ["Polycount", "12,400 tris"],
-      ["Formats", "GLB / FBX / BLEND"],
-      ["Textures", "4K PBR (5 maps)"],
-      ["UV Mapped", "Yes"],
-      ["Rigged", "No"],
-      ["License", "Commercial"]
-    ]
-  },
-  {
     "id": "2",
     "title": "Geometric Shape Kit",
     "price": "$19",
@@ -36,12 +13,30 @@
       "wireColor": "#f97316"
     },
     "specs": [
-      ["Polycount", "8,200 tris"],
-      ["Formats", "GLB / FBX / BLEND"],
-      ["Textures", "4K PBR (3 maps)"],
-      ["UV Mapped", "Yes"],
-      ["Rigged", "No"],
-      ["License", "Commercial"]
+      [
+        "Polycount",
+        "8,200 tris"
+      ],
+      [
+        "Formats",
+        "GLB / FBX / BLEND"
+      ],
+      [
+        "Textures",
+        "4K PBR (3 maps)"
+      ],
+      [
+        "UV Mapped",
+        "Yes"
+      ],
+      [
+        "Rigged",
+        "No"
+      ],
+      [
+        "License",
+        "Commercial"
+      ]
     ]
   },
   {
@@ -58,12 +53,30 @@
       "wireColor": "#14b8a6"
     },
     "specs": [
-      ["Polycount", "15,600 tris"],
-      ["Formats", "GLB / FBX / BLEND"],
-      ["Textures", "4K PBR (4 maps)"],
-      ["UV Mapped", "Yes"],
-      ["Rigged", "No"],
-      ["License", "Commercial"]
+      [
+        "Polycount",
+        "15,600 tris"
+      ],
+      [
+        "Formats",
+        "GLB / FBX / BLEND"
+      ],
+      [
+        "Textures",
+        "4K PBR (4 maps)"
+      ],
+      [
+        "UV Mapped",
+        "Yes"
+      ],
+      [
+        "Rigged",
+        "No"
+      ],
+      [
+        "License",
+        "Commercial"
+      ]
     ]
   },
   {
@@ -81,12 +94,30 @@
       "wobble": true
     },
     "specs": [
-      ["Polycount", "45,000 tris"],
-      ["Formats", "GLB / FBX / BLEND"],
-      ["Textures", "4K PBR (6 maps)"],
-      ["UV Mapped", "Yes"],
-      ["Rigged", "No"],
-      ["License", "Commercial"]
+      [
+        "Polycount",
+        "45,000 tris"
+      ],
+      [
+        "Formats",
+        "GLB / FBX / BLEND"
+      ],
+      [
+        "Textures",
+        "4K PBR (6 maps)"
+      ],
+      [
+        "UV Mapped",
+        "Yes"
+      ],
+      [
+        "Rigged",
+        "No"
+      ],
+      [
+        "License",
+        "Commercial"
+      ]
     ]
   },
   {
@@ -97,14 +128,36 @@
     "format": "GLB / BLEND",
     "polycount": "6,800 tris",
     "description": "Charming low-poly landscape elements including terrain, trees, and props. Optimized for real-time rendering and game environments.",
-    "model": { "variant": "cone", "color": "#0a1510", "wireColor": "#14b8a6" },
+    "model": {
+      "variant": "cone",
+      "color": "#0a1510",
+      "wireColor": "#14b8a6"
+    },
     "specs": [
-      ["Polycount", "6,800 tris"],
-      ["Formats", "GLB / BLEND"],
-      ["Textures", "2K Stylized"],
-      ["UV Mapped", "Yes"],
-      ["Rigged", "No"],
-      ["License", "Commercial"]
+      [
+        "Polycount",
+        "6,800 tris"
+      ],
+      [
+        "Formats",
+        "GLB / BLEND"
+      ],
+      [
+        "Textures",
+        "2K Stylized"
+      ],
+      [
+        "UV Mapped",
+        "Yes"
+      ],
+      [
+        "Rigged",
+        "No"
+      ],
+      [
+        "License",
+        "Commercial"
+      ]
     ]
   },
   {
@@ -122,12 +175,30 @@
       "wobble": true
     },
     "specs": [
-      ["Polycount", "18,400 tris"],
-      ["Formats", "GLB / FBX / BLEND"],
-      ["Textures", "4K PBR (5 maps)"],
-      ["UV Mapped", "Yes"],
-      ["Rigged", "No"],
-      ["License", "Commercial"]
+      [
+        "Polycount",
+        "18,400 tris"
+      ],
+      [
+        "Formats",
+        "GLB / FBX / BLEND"
+      ],
+      [
+        "Textures",
+        "4K PBR (5 maps)"
+      ],
+      [
+        "UV Mapped",
+        "Yes"
+      ],
+      [
+        "Rigged",
+        "No"
+      ],
+      [
+        "License",
+        "Commercial"
+      ]
     ]
   }
 ]
