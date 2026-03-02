@@ -1,0 +1,323 @@
+{
+  "hero": {
+    "tagline": "3D Artist ",
+    "headline": "Crafting Digital Realities",
+    "subheadline": "Immersive 3D product visualizations and animations that push the boundaries of digital storytelling",
+    "ctaPrimary": {
+      "label": "Explore Projects",
+      "href": "/projects"
+    },
+    "ctaSecondary": {
+      "label": "Visit Shop",
+      "href": "/shop"
+    },
+    "stats": [
+      {
+        "value": "300+",
+        "label": "Projects"
+      },
+      {
+        "value": "30+",
+        "label": "Clients"
+      },
+      {
+        "value": "8yr",
+        "label": "Experience"
+      }
+    ],
+    "scrollSections": [
+      {
+        "tagLabel": "Philosophy",
+        "tagColor": "secondary",
+        "title": "Every Polygon Tells a Story",
+        "text": "From concept to photorealistic render — we obsess over every detail to deliver visuals that captivate and convert.",
+        "align": "right"
+      },
+      {
+        "tagLabel": "Technology",
+        "tagColor": "primary",
+        "title": "Built for the Future",
+        "text": "Leveraging Blender, Cycles, and EEVEE to create assets that work across film, games, AR, and the web.",
+        "align": "left"
+      }
+    ],
+    "heroModel": {
+      "modelFile": "",
+      "solidColor": "#0a1520",
+      "wireColor": "#14b8a6",
+      "particleColor": "#f97316",
+      "particleCount": 500
+    }
+  },
+  "aboutPreview": {
+    "tagline": "About the Artist",
+    "headline": "Where Art Meets Technology",
+    "description": "Specializing in photorealistic product visualization and cinematic animation using Blender. Every project is a meticulous blend of artistic vision and technical precision.",
+    "ctaLabel": "Read Full Story",
+    "stats": [
+      {
+        "value": "50+",
+        "label": "Projects Delivered",
+        "color": "teal"
+      },
+      {
+        "value": "8+",
+        "label": "Years Experience",
+        "color": "orange"
+      },
+      {
+        "value": "30+",
+        "label": "Happy Clients",
+        "color": "teal"
+      },
+      {
+        "value": "4K+",
+        "label": "Renders Created",
+        "color": "orange"
+      }
+    ]
+  },
+  "about": {
+    "tagline": "About",
+    "headline": "The Story Behind the Pixels",
+    "description": "A passionate 3D artist turning imagination into photorealistic reality. Specializing in product visualization, motion design, and interactive web experiences.",
+    "vision": {
+      "title": "Vision",
+      "text": "Every render should evoke emotion. I believe 3D visualization is not just about accuracy — it's about telling a story that connects the viewer to the product on a deeper level."
+    },
+    "approach": {
+      "title": "Approach",
+      "text": "Meticulous attention to material physics, lighting dynamics, and compositional rhythm. Every project is a collaboration — your vision amplified through technical mastery."
+    },
+    "skills": [
+      {
+        "name": "Blender",
+        "level": 95,
+        "color": "teal"
+      },
+      {
+        "name": "Cycles / EEVEE",
+        "level": 90,
+        "color": "teal"
+      },
+      {
+        "name": "Substance Painter",
+        "level": 85,
+        "color": "orange"
+      },
+      {
+        "name": "Three.js / R3F",
+        "level": 80,
+        "color": "orange"
+      },
+      {
+        "name": "After Effects",
+        "level": 75,
+        "color": "teal"
+      },
+      {
+        "name": "Unreal Engine",
+        "level": 70,
+        "color": "teal"
+      }
+    ],
+    "timeline": [
+      {
+        "year": "2025",
+        "title": "Launched Digital Atelier",
+        "description": "Started selling premium 3D assets and shader packs online.",
+        "color": "teal"
+      },
+      {
+        "year": "2023",
+        "title": "Studio Partnership",
+        "description": "Collaborated with top advertising studios for photorealistic product campaigns.",
+        "color": "orange"
+      },
+      {
+        "year": "2021",
+        "title": "Went Freelance",
+        "description": "Transitioned to full-time freelance 3D artist, focusing on product visualization.",
+        "color": "teal"
+      },
+      {
+        "year": "2018",
+        "title": "First Blender Project",
+        "description": "Discovered Blender and fell in love with the open-source 3D pipeline.",
+        "color": "orange"
+      }
+    ],
+    "ctaHeadline": "Let's Create Something Extraordinary"
+  },
+  "contact": {
+    "tagline": "Get in Touch",
+    "headline": "Let's Talk",
+    "subheadline": "Have a project in mind? Drop a message and let's create something amazing together.",
+    "successTitle": "Message Sent!",
+    "successMessage": "Thanks for reaching out. I'll get back to you within 24 hours.",
+    "projectTypes": [
+      {
+        "value": "product-viz",
+        "label": "Product Visualization"
+      },
+      {
+        "value": "animation",
+        "label": "3D Animation"
+      },
+      {
+        "value": "interactive",
+        "label": "Interactive 3D / WebGL"
+      },
+      {
+        "value": "archviz",
+        "label": "Architectural Visualization"
+      },
+      {
+        "value": "other",
+        "label": "Other"
+      }
+    ],
+    "budgetRanges": [
+      {
+        "value": "1k-5k",
+        "label": "$1,000 – $5,000"
+      },
+      {
+        "value": "5k-15k",
+        "label": "$5,000 – $15,000"
+      },
+      {
+        "value": "15k+",
+        "label": "$15,000+"
+      }
+    ],
+    "infoCards": [
+      {
+        "label": "Email",
+        "value": "hello@behindcg.com",
+        "icon": "📧",
+        "glow": "teal"
+      },
+      {
+        "label": "Location",
+        "value": "Remote / Worldwide",
+        "icon": "🌍",
+        "glow": "orange"
+      },
+      {
+        "label": "Response Time",
+        "value": "Within 24 hours",
+        "icon": "⚡",
+        "glow": "teal"
+      }
+    ]
+  },
+  "navbar": {
+    "brand": "BehindCG",
+    "links": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "Projects",
+        "href": "/projects"
+      },
+      {
+        "label": "Shop",
+        "href": "/shop"
+      },
+      {
+        "label": "About",
+        "href": "/about"
+      },
+      {
+        "label": "Contact",
+        "href": "/contact"
+      }
+    ],
+    "ctaLabel": "Shop Now",
+    "ctaHref": "/shop"
+  },
+  "footer": {
+    "brand": "BehindCG",
+    "description": "Crafting immersive 3D product visualizations and animations. Bringing ideas to life through Blender and cutting-edge rendering technology.",
+    "navigation": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "Projects",
+        "href": "/projects"
+      },
+      {
+        "label": "Shop",
+        "href": "/shop"
+      },
+      {
+        "label": "About",
+        "href": "/about"
+      },
+      {
+        "label": "Contact",
+        "href": "/contact"
+      }
+    ],
+    "social": [
+      {
+        "label": "Instagram",
+        "href": "#"
+      },
+      {
+        "label": "Behance",
+        "href": "#"
+      },
+      {
+        "label": "ArtStation",
+        "href": "#"
+      },
+      {
+        "label": "LinkedIn",
+        "href": "#"
+      }
+    ],
+    "copyright": "BehindCG. All rights reserved.",
+    "techLine": "Crafted with Three.js · Next.js · GSAP"
+  },
+  "shopPage": {
+    "tagline": "Digital Atelier",
+    "headline": "The Shop",
+    "subheadline": "Premium 3D assets — ready for production use in your projects",
+    "filterCategories": [
+      "All",
+      "3D Models",
+      "Shaders",
+      "Textures",
+      "HDRIs"
+    ]
+  },
+  "projectsPage": {
+    "tagline": "Portfolio",
+    "headline": "All Projects",
+    "subheadline": "A curated collection of 3D visualizations, animations, and interactive experiences",
+    "filterCategories": [
+      "All",
+      "Product Viz",
+      "Motion Design",
+      "Concept Art",
+      "Generative"
+    ]
+  },
+  "shopPreview": {
+    "tagline": "Digital Atelier",
+    "headline": "Premium 3D Assets",
+    "subheadline": "Production-ready models, shaders, and textures for your next project",
+    "ctaLabel": "Browse All Assets"
+  },
+  "projectsPreview": {
+    "tagline": "Selected Work",
+    "headline": "Featured Projects",
+    "ctaLabel": "View All Projects"
+  }
+}
