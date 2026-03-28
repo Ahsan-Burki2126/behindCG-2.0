@@ -63,25 +63,13 @@ function GLBHeroMesh({
   useFrame((state) => {
     if (!groupRef.current) return;
     const t = state.clock.elapsedTime;
-    const scroll = scrollProgress.current;
-    const mouse = mousePosition.current;
 
-    groupRef.current.rotation.x = t * 0.1 + scroll * Math.PI * 2;
-    groupRef.current.rotation.y = t * 0.15 + scroll * Math.PI;
+    groupRef.current.rotation.x = t * 0.1;
+    groupRef.current.rotation.y = t * 0.15;
 
-    const targetRotZ = mouse.x * 0.2;
+    const targetRotZ = mousePosition.current.x * 0.2;
     groupRef.current.rotation.z +=
       (targetRotZ - groupRef.current.rotation.z) * 0.05;
-
-    const scaleBase = 1 + Math.sin(scroll * Math.PI) * 0.3;
-    const targetScale = Math.max(0.6, scaleBase - scroll * 0.4);
-    groupRef.current.scale.lerp(
-      new THREE.Vector3(targetScale, targetScale, targetScale),
-      0.05,
-    );
-
-    groupRef.current.position.y = -scroll * 3;
-    groupRef.current.position.x = Math.sin(scroll * Math.PI * 2) * 1.5;
   });
 
   return (
@@ -128,10 +116,8 @@ export default function HeroModel({
       // GLB mode — only animate particles
       if (particlesRef.current) {
         const t = state.clock.elapsedTime;
-        const scroll = scrollProgress.current;
         particlesRef.current.rotation.y = t * 0.02;
         particlesRef.current.rotation.x = t * 0.01;
-        particlesRef.current.position.y = -scroll * 2;
       }
       return;
     }
@@ -139,12 +125,11 @@ export default function HeroModel({
     if (!meshRef.current || !wireRef.current) return;
 
     const t = state.clock.elapsedTime;
-    const scroll = scrollProgress.current;
     const mouse = mousePosition.current;
 
     // ─── Base rotation ───
-    meshRef.current.rotation.x = t * 0.1 + scroll * Math.PI * 2;
-    meshRef.current.rotation.y = t * 0.15 + scroll * Math.PI;
+    meshRef.current.rotation.x = t * 0.1;
+    meshRef.current.rotation.y = t * 0.15;
     wireRef.current.rotation.x = meshRef.current.rotation.x;
     wireRef.current.rotation.y = meshRef.current.rotation.y;
 
@@ -154,25 +139,10 @@ export default function HeroModel({
       (targetRotZ - meshRef.current.rotation.z) * 0.05;
     wireRef.current.rotation.z = meshRef.current.rotation.z;
 
-    // ─── Scroll-driven scale (explode/collapse) ───
-    const scaleBase = 1 + Math.sin(scroll * Math.PI) * 0.3;
-    const targetScale = Math.max(0.6, scaleBase - scroll * 0.4);
-    meshRef.current.scale.lerp(
-      new THREE.Vector3(targetScale, targetScale, targetScale),
-      0.05,
-    );
-    wireRef.current.scale.copy(meshRef.current.scale);
-
-    // ─── Scroll-driven position (camera fly-through feel) ───
-    meshRef.current.position.y = -scroll * 3;
-    meshRef.current.position.x = Math.sin(scroll * Math.PI * 2) * 1.5;
-    wireRef.current.position.copy(meshRef.current.position);
-
     // ─── Particles ───
     if (particlesRef.current) {
       particlesRef.current.rotation.y = t * 0.02;
       particlesRef.current.rotation.x = t * 0.01;
-      particlesRef.current.position.y = -scroll * 2;
     }
   });
 

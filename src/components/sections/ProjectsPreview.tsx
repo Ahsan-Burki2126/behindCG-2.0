@@ -8,8 +8,8 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useContent } from "@/lib/ContentContext";
 
-const InlineModelPreview = dynamic(
-  () => import("@/components/three/InlineModelPreview"),
+const LightweightProjectViewer = dynamic(
+  () => import("@/components/three/LightweightProjectViewer"),
   {
     ssr: false,
     loading: () => (
@@ -134,16 +134,14 @@ export default function ProjectsPreview() {
               <GlassCard className="project-card group p-0 overflow-hidden">
                 {/* 3D Model Preview — 65% */}
                 <div className="aspect-[16/10] bg-white/[0.02] overflow-hidden relative">
-                  <InlineModelPreview
+                  <LightweightProjectViewer
+                    modelFile={(project as any).modelFile}
                     variant={project.model.variant as any}
                     color={project.model.color}
                     wireColor={project.model.wireColor}
-                    distort={project.model.distort}
-                    wobble={project.model.wobble}
-                    modelFile={(project as any).modelFile}
-                    viewerSettings={(project as any).viewerSettings}
-                    className="!aspect-[16/10]"
+                    autoRotateSpeed={0.4}
                     scale={0.8}
+                    className="!aspect-[16/10]"
                   />
                   {/* Category badge */}
                   <span className="absolute top-[var(--space-2)] left-[var(--space-2)] text-[10px] font-mono uppercase tracking-wider px-4 py-1.5 rounded-full bg-accent/10 text-accent border border-accent/20">

@@ -14,6 +14,12 @@ const SmoothScroll = dynamic(() => import("@/components/layout/SmoothScroll"), {
   ssr: false,
 });
 const Footer = dynamic(() => import("@/components/layout/Footer"));
+const InteractiveParticles = dynamic(
+  () => import("@/components/layout/InteractiveParticles"),
+  {
+    ssr: false,
+  },
+);
 
 export default function ClientProviders({
   children,
@@ -29,6 +35,7 @@ export default function ClientProviders({
 
   return (
     <ContentProvider>
+      <InteractiveParticles />
       <CustomCursor />
       <Navbar />
       <SmoothScroll>
