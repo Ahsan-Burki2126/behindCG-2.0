@@ -96,13 +96,8 @@ export default function ProductDetail({
           {/* 3D Previewer */}
           <div className="fade-in aspect-square rounded-2xl border border-white/5 overflow-hidden glow-teal">
             <InlineModelPreview
-              variant={(product.model?.variant as any) ?? "sphere"}
-              color={product.model?.color ?? "#0a1a1a"}
-              wireColor={product.model?.wireColor ?? "#14b8a6"}
-              distort={product.model?.distort ?? false}
               modelFile={product.modelFile}
               viewerSettings={(product as any).viewerSettings}
-              scale={0.9}
             />
           </div>
 
@@ -174,30 +169,6 @@ export default function ProductDetail({
           </div>
         </div>
 
-        {/* Related Model views */}
-        <div className="mt-[var(--space-12)]">
-          <h2 className="font-bold mb-[var(--space-4)]">More Views</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-[var(--space-2)]">
-            {[
-              { variant: "sphere" as const, wireColor: "#f97316" },
-              { variant: "icosahedron" as const, wireColor: "#14b8a6" },
-              { variant: "octahedron" as const, wireColor: "#f97316" },
-              { variant: "dodecahedron" as const, wireColor: "#14b8a6" },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="aspect-square rounded-xl border border-white/5 overflow-hidden bg-white/[0.02]"
-              >
-                <InlineModelPreview
-                  variant={item.variant}
-                  color="#0a1520"
-                  wireColor={item.wireColor}
-                  scale={0.55}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );

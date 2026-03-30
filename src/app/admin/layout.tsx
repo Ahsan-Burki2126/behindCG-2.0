@@ -39,7 +39,7 @@ export default function AdminLayout({
 
   if (pathname === "/admin/login") {
     return (
-      <>
+      <div data-admin-page>
         {children}
         <style jsx global>{`
           .admin-input {
@@ -91,7 +91,7 @@ export default function AdminLayout({
             padding: 24px;
           }
         `}</style>
-      </>
+      </div>
     );
   }
 

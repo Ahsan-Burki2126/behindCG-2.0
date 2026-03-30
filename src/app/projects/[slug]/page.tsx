@@ -110,15 +110,9 @@ export default function ProjectCaseStudy({
         {/* 3D Hero Preview */}
         <div className="fade-in aspect-video rounded-2xl mb-[var(--space-8)] overflow-hidden border border-white/5 glow-teal">
           <InlineModelPreview
-            variant={project.model.variant as any}
-            color={project.model.color}
-            wireColor={project.model.wireColor}
-            distort={project.model.distort}
-            wobble={project.model.wobble}
             modelFile={project.modelFile}
             viewerSettings={(project as any).viewerSettings}
             className="!aspect-video"
-            scale={1.2}
           />
         </div>
 
@@ -174,52 +168,6 @@ export default function ProjectCaseStudy({
           <p className="text-body-lg text-foreground/50 leading-relaxed">
             {project.longDescription || project.description}
           </p>
-        </div>
-
-        {/* Gallery — 3D Model Variants */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-3)] mb-[var(--space-8)]">
-          {[
-            {
-              variant: "sphere" as const,
-              label: "Alternate View A",
-              color: "#0a1a18",
-              wireColor: "#14b8a6",
-            },
-            {
-              variant: "octahedron" as const,
-              label: "Alternate View B",
-              color: "#150f0a",
-              wireColor: "#f97316",
-            },
-            {
-              variant: "torusKnot" as const,
-              label: "Detail Study",
-              color: "#0a0f15",
-              wireColor: "#14b8a6",
-            },
-            {
-              variant: "dodecahedron" as const,
-              label: "Material Exploration",
-              color: "#1a0a10",
-              wireColor: "#f97316",
-            },
-          ].map((item, i) => (
-            <div
-              key={i}
-              className="fade-in aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 overflow-hidden relative"
-            >
-              <InlineModelPreview
-                variant={item.variant}
-                color={item.color}
-                wireColor={item.wireColor}
-                className="!aspect-[4/3]"
-                scale={0.6}
-              />
-              <span className="absolute bottom-[var(--space-2)] left-[var(--space-2)] text-xs font-mono text-foreground/30">
-                {item.label}
-              </span>
-            </div>
-          ))}
         </div>
 
         {/* CTA */}

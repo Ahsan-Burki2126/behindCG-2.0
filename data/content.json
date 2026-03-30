@@ -1,6 +1,6 @@
 {
   "hero": {
-    "tagline": "3D Artist ",
+    "tagline": "Ahsan Burki",
     "headline": "Crafting Digital Realities",
     "subheadline": "Immersive 3D product visualizations and animations that push the boundaries of digital storytelling",
     "ctaPrimary": {
@@ -230,6 +230,10 @@
       {
         "label": "About",
         "href": "/about"
+      },
+      {
+        "label": "AI Studio",
+        "href": "/ai-product"
       },
       {
         "label": "Contact",

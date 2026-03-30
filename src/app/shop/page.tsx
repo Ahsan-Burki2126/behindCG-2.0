@@ -10,87 +10,8 @@ import { useContent } from "@/lib/ContentContext";
 
 const InlineModelPreview = dynamic(
   () => import("@/components/three/InlineModelPreview"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="w-full aspect-square bg-white/[0.02] animate-pulse rounded-xl" />
-    ),
-  },
+  { ssr: false },
 );
-
-const DEFAULT_PRODUCTS = [
-  {
-    id: "1",
-    title: "Crystal Sphere Pack",
-    price: "$29",
-    category: "3D Model",
-    format: "GLB / FBX / BLEND",
-    polycount: "12,400 tris",
-    model: {
-      variant: "sphere",
-      color: "#0a1a1a",
-      wireColor: "#14b8a6",
-      distort: true,
-    },
-  },
-  {
-    id: "2",
-    title: "Geometric Shape Kit",
-    price: "$19",
-    category: "3D Models",
-    format: "GLB / FBX / BLEND",
-    polycount: "8,200 tris",
-    model: { variant: "dodecahedron", color: "#1a0f05", wireColor: "#f97316" },
-  },
-  {
-    id: "3",
-    title: "Abstract Torus Pack",
-    price: "$15",
-    category: "3D Model",
-    format: "GLB / FBX / BLEND",
-    polycount: "15,600 tris",
-    model: { variant: "torusKnot", color: "#0a0f1a", wireColor: "#14b8a6" },
-  },
-  {
-    id: "4",
-    title: "Faceted Gem Collection",
-    price: "$49",
-    category: "3D Model",
-    format: "GLB / FBX / BLEND",
-    polycount: "45,000 tris",
-    model: {
-      variant: "octahedron",
-      color: "#150a1a",
-      wireColor: "#f97316",
-      wobble: true,
-    },
-  },
-  {
-    id: "5",
-    title: "Low-Poly Landscape Set",
-    price: "$12",
-    category: "3D Model",
-    format: "GLB / BLEND",
-    polycount: "6,800 tris",
-    model: { variant: "cone", color: "#0a1510", wireColor: "#14b8a6" },
-  },
-  {
-    id: "6",
-    title: "Sci-Fi Cylinder Array",
-    price: "$22",
-    category: "3D Model",
-    format: "GLB / FBX / BLEND",
-    polycount: "18,400 tris",
-    model: {
-      variant: "cylinder",
-      color: "#101520",
-      wireColor: "#f97316",
-      wobble: true,
-    },
-  },
-];
-
-const DEFAULT_FILTERS = ["All", "3D Models", "Shaders", "Textures", "HDRIs"];
 
 export default function ShopPage() {
   const gridRef = useRef<HTMLDivElement>(null);
@@ -101,11 +22,11 @@ export default function ShopPage() {
   const subheadline =
     sp?.subheadline ??
     "Premium 3D assets — ready for production use in your projects";
-  const filters = sp?.filterCategories ?? DEFAULT_FILTERS;
-  const products = content?.products ?? DEFAULT_PRODUCTS;
+
+  const products = content?.products ?? [];
 
   useEffect(() => {
-    if (!gridRef.current) return;
+    if (!gridRef.current || products.length === 0) return;
     const items = gridRef.current.querySelectorAll(".shop-item");
 
     gsap.fromTo(
@@ -127,7 +48,7 @@ export default function ShopPage() {
     return () => {
       ScrollTrigger.getAll().forEach((st) => st.kill());
     };
-  }, []);
+  }, [products.length]);
 
   return (
     <div className="min-h-screen pt-[var(--space-15)] pb-[var(--space-12)]">
@@ -161,63 +82,54 @@ export default function ShopPage() {
           </AnimatedText>
         </div>
 
-        {/* Filter Bar */}
-        <div className="flex flex-wrap gap-[var(--space-1)] justify-center mb-[var(--space-6)]">
-          {filters.map((cat) => (
-            <button
-              key={cat}
-              className="text-sm px-7 py-3 rounded-full glass glass-hover text-foreground/60 hover:text-accent hover:border-accent/30 transition-colors"
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
         {/* Products */}
-        <div
-          ref={gridRef}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[var(--space-3)]"
-        >
-          {products.map((product) => (
-            <Link key={product.id} href={`/shop/${product.id}`}>
-              <GlassCard className="shop-item group p-0 overflow-hidden h-full">
-                <div className="aspect-square bg-white/[0.02] relative overflow-hidden">
-                  {/* 3D Model Preview */}
-                  <InlineModelPreview
-                    variant={product.model.variant as any}
-                    color={product.model.color}
-                    wireColor={product.model.wireColor}
-                    distort={product.model.distort}
-                    wobble={product.model.wobble}
-                    modelFile={(product as any).modelFile}
-                    viewerSettings={(product as any).viewerSettings}
-                    scale={0.65}
-                  />
-                  {/* Format badge */}
-                  <span className="absolute top-[var(--space-2)] right-[var(--space-2)] text-[10px] font-mono text-foreground/30 bg-white/5 px-3 py-1.5 rounded border border-white/10">
-                    {product.format}
-                  </span>
-                </div>
-                <div className="p-[var(--space-3)] border-t border-white/5">
-                  <p className="font-mono text-[10px] text-foreground/30 uppercase tracking-wider mb-[var(--space-1)]">
-                    {product.category} &middot; {product.polycount}
-                  </p>
-                  <h3 className="text-lg font-semibold mb-[var(--space-2)] group-hover:text-accent transition-colors duration-300">
-                    {product.title}
-                  </h3>
-                  <div className="flex items-center justify-between">
-                    <p className="text-accent-secondary font-bold text-xl">
-                      {product.price}
-                    </p>
-                    <span className="text-xs text-foreground/30 group-hover:text-accent/60 transition-colors font-mono">
-                      View Details &rarr;
+        {products.length === 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[var(--space-3)]">
+            {[0, 1, 2].map((i) => (
+              <div
+                key={i}
+                className="aspect-square rounded-2xl bg-white/[0.02] border border-white/5 animate-pulse"
+              />
+            ))}
+          </div>
+        ) : (
+          <div
+            ref={gridRef}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[var(--space-3)]"
+          >
+            {products.map((product) => (
+              <Link key={product.id} href={`/shop/${product.id}`}>
+                <GlassCard className="shop-item group p-0 overflow-hidden h-full">
+                  <div className="aspect-square bg-white/[0.02] relative overflow-hidden">
+                    <InlineModelPreview
+                      modelFile={(product as any).modelFile}
+                      viewerSettings={(product as any).viewerSettings}
+                    />
+                    <span className="absolute top-[var(--space-2)] right-[var(--space-2)] text-[10px] font-mono text-foreground/30 bg-white/5 px-3 py-1.5 rounded border border-white/10">
+                      {product.format}
                     </span>
                   </div>
-                </div>
-              </GlassCard>
-            </Link>
-          ))}
-        </div>
+                  <div className="p-[var(--space-3)] border-t border-white/5">
+                    <p className="font-mono text-[10px] text-foreground/30 uppercase tracking-wider mb-[var(--space-1)]">
+                      {product.category} &middot; {product.polycount}
+                    </p>
+                    <h3 className="text-lg font-semibold mb-[var(--space-2)] group-hover:text-accent transition-colors duration-300">
+                      {product.title}
+                    </h3>
+                    <div className="flex items-center justify-between">
+                      <p className="text-accent-secondary font-bold text-xl">
+                        {product.price}
+                      </p>
+                      <span className="text-xs text-foreground/30 group-hover:text-accent/60 transition-colors font-mono">
+                        View Details &rarr;
+                      </span>
+                    </div>
+                  </div>
+                </GlassCard>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

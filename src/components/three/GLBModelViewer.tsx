@@ -9,6 +9,7 @@ import {
   Center,
   ContactShadows,
   Float,
+  Html,
 } from "@react-three/drei";
 import * as THREE from "three";
 import type { ViewerSettings } from "@/lib/ContentContext";
@@ -119,7 +120,13 @@ export default function GLBModelViewer({
           background: s.bgColor === "transparent" ? "transparent" : s.bgColor,
         }}
       >
-        <Suspense fallback={null}>
+        <Suspense
+          fallback={
+            <Html center>
+              <div className="w-6 h-6 rounded-full border border-white/10 border-t-[#14b8a6] animate-spin" />
+            </Html>
+          }
+        >
           <ambientLight intensity={s.ambientIntensity} />
           <directionalLight
             position={[3, 3, 5]}

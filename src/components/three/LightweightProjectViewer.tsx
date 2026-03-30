@@ -2,30 +2,17 @@
 
 import { Suspense, useRef, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF, Environment, Center } from "@react-three/drei";
+import { useGLTF, Environment, Center, Html } from "@react-three/drei";
 import * as THREE from "three";
-
-type ModelVariant =
-  | "icosahedron"
-  | "torus"
-  | "torusKnot"
-  | "sphere"
-  | "octahedron"
-  | "dodecahedron"
-  | "cylinder"
-  | "cone";
+import InViewCanvas from "./InViewCanvas";
 
 interface LightweightProjectViewerProps {
-  modelFile?: string; // Custom GLB file
-  variant?: ModelVariant; // Fallback procedural geometry
-  color?: string;
-  wireColor?: string;
+  modelFile?: string;
   autoRotateSpeed?: number;
-  scale?: number;
   className?: string;
 }
 
-/* ── Lightweight GLB Loader ── */
+/* ── GLB Loader ── */
 function GLBProjectModel({
   url,
   autoRotateSpeed = 0.4,
@@ -63,147 +50,72 @@ function GLBProjectModel({
   );
 }
 
-/* ── Lightweight Procedural Model ── */
-function RotatingProcedural({
-  variant = "icosahedron",
-  color = "#0a1520",
-  wireColor = "#14b8a6",
-  scale = 1,
-  autoRotateSpeed = 0.4,
-}: Omit<LightweightProjectViewerProps, "modelFile" | "className">) {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const wireRef = useRef<THREE.Mesh>(null);
-
-  useFrame(() => {
-    if (!meshRef.current || !wireRef.current) return;
-    meshRef.current.rotation.x += 0.004;
-    meshRef.current.rotation.y += autoRotateSpeed * 0.01;
-    wireRef.current.rotation.x = meshRef.current.rotation.x;
-    wireRef.current.rotation.y = meshRef.current.rotation.y;
-  });
-
-  let geometry =
-    variant === "torus"
-      ? [1, 0.4, 16, 16]
-      : variant === "torusKnot"
-        ? [1, 0.4, 32, 8]
-        : variant === "sphere"
-          ? [1, 16, 16]
-          : variant === "octahedron"
-            ? [1, 0]
-            : variant === "dodecahedron"
-              ? [1, 0]
-              : variant === "cylinder"
-                ? [1, 1, 16]
-                : variant === "cone"
-                  ? [1, 1.5, 16]
-                  : [1.5, 1]; // icosahedron
-
-  const GeometryComponent =
-    variant === "torus"
-      ? THREE.TorusGeometry
-      : variant === "torusKnot"
-        ? THREE.TorusKnotGeometry
-        : variant === "sphere"
-          ? THREE.SphereGeometry
-          : variant === "octahedron"
-            ? THREE.OctahedronGeometry
-            : variant === "dodecahedron"
-              ? THREE.DodecahedronGeometry
-              : variant === "cylinder"
-                ? THREE.CylinderGeometry
-                : variant === "cone"
-                  ? THREE.ConeGeometry
-                  : THREE.IcosahedronGeometry;
-
+/* ── No-model placeholder rendered inside the Canvas ── */
+function EmptyModelPlaceholder() {
   return (
-    <group scale={scale}>
-      <mesh ref={meshRef}>
-        <primitive
-          object={new GeometryComponent(...(geometry as any))}
-          attach="geometry"
-        />
-        <meshStandardMaterial
-          color={color}
-          roughness={0.2}
-          metalness={0.8}
-          envMapIntensity={1.5}
-        />
-      </mesh>
-      <mesh ref={wireRef}>
-        <primitive
-          object={
-            new GeometryComponent(
-              ...(geometry as any).map((v: number, i: number) =>
-                i === 0 ? v * 1.02 : v,
-              ),
-            )
-          }
-          attach="geometry"
-        />
-        <meshBasicMaterial
-          color={wireColor}
-          wireframe
-          transparent
-          opacity={0.12}
-        />
-      </mesh>
-    </group>
+    <Html center>
+      <div className="flex flex-col items-center gap-2 text-white/20 select-none pointer-events-none">
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1"
+        >
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+        </svg>
+        <span className="text-[10px] tracking-widest uppercase">
+          No model
+        </span>
+      </div>
+    </Html>
   );
 }
 
 /**
- * Lightweight 3D viewer for projects grid.
- * Supports custom GLB files with fallback to procedural geometries.
- * Optimized for performance with reduced detail and draw calls.
+ * Lightweight 3D viewer for project grid cards.
+ * Loads .glb files on demand (only when scrolled into view).
+ * Shows a placeholder when no model file is assigned.
  */
 export default function LightweightProjectViewer({
   modelFile,
-  variant = "icosahedron",
-  color = "#0a1520",
-  wireColor = "#14b8a6",
   autoRotateSpeed = 0.4,
-  scale = 1,
   className = "",
 }: LightweightProjectViewerProps) {
   return (
     <div className={`w-full aspect-square ${className}`}>
-      <Canvas
-        camera={{
-          position: [0, 0, 3.5],
-          fov: 40,
-        }}
-        dpr={[1, 1.5]}
-        gl={{
-          antialias: true,
-          alpha: true,
-          precision: "mediump",
-        }}
-        style={{ background: "transparent" }}
-      >
-        <Suspense fallback={null}>
-          <ambientLight intensity={0.4} />
-          <directionalLight position={[3, 3, 5]} intensity={0.8} />
-          <Environment preset="studio" />
+      <InViewCanvas>
+        <Canvas
+          camera={{ position: [0, 0, 3.5], fov: 40 }}
+          dpr={[1, 1.5]}
+          gl={{ antialias: true, alpha: true, precision: "mediump" }}
+          style={{ background: "transparent" }}
+        >
+          <Suspense
+            fallback={
+              <Html center>
+                <div className="w-6 h-6 rounded-full border border-white/10 border-t-[#14b8a6] animate-spin" />
+              </Html>
+            }
+          >
+            <ambientLight intensity={0.4} />
+            <directionalLight position={[3, 3, 5]} intensity={0.8} />
+            <Environment preset="studio" />
 
-          <Center>
-            {modelFile ? (
-              <GLBProjectModel
-                url={modelFile}
-                autoRotateSpeed={autoRotateSpeed}
-              />
-            ) : (
-              <RotatingProcedural
-                variant={variant}
-                color={color}
-                wireColor={wireColor}
-                scale={scale}
-                autoRotateSpeed={autoRotateSpeed}
-              />
-            )}
-          </Center>
-        </Suspense>
-      </Canvas>
+            <Center>
+              {modelFile ? (
+                <GLBProjectModel
+                  url={modelFile}
+                  autoRotateSpeed={autoRotateSpeed}
+                />
+              ) : (
+                <EmptyModelPlaceholder />
+              )}
+            </Center>
+          </Suspense>
+        </Canvas>
+      </InViewCanvas>
     </div>
   );
 }

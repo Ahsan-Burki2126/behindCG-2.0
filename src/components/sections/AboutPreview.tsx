@@ -60,7 +60,7 @@ export default function AboutPreview() {
       <div className="container-site">
         {/* Divider */}
         <div className="divider mb-[var(--space-15)]" />
-
+ 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-[var(--space-8)] lg:gap-[var(--space-12)] items-center">
           {/* Left — Text */}
           <div>

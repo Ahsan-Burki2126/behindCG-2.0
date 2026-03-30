@@ -10,6 +10,7 @@ const DEFAULT_LINKS = [
   { label: "Projects", href: "/projects" },
   { label: "Shop", href: "/shop" },
   { label: "About", href: "/about" },
+  { label: "AI Studio", href: "/ai-product" },
   { label: "Contact", href: "/contact" },
 ];
 

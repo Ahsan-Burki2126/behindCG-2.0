@@ -18,47 +18,6 @@ const LightweightProjectViewer = dynamic(
   },
 );
 
-const DEFAULT_PROJECTS = [
-  {
-    id: 1,
-    title: "Crystal Gemstone Collection",
-    category: "Product Viz",
-    slug: "crystal-gemstone",
-    model: {
-      variant: "icosahedron",
-      color: "#0a2020",
-      wireColor: "#14b8a6",
-      distort: true,
-    },
-  },
-  {
-    id: 2,
-    title: "Abstract Torus Sculpture",
-    category: "Motion Design",
-    slug: "abstract-torus",
-    model: { variant: "torus", color: "#1a0a0a", wireColor: "#f97316" },
-  },
-  {
-    id: 3,
-    title: "Geometric Pendant Light",
-    category: "Product Viz",
-    slug: "geometric-pendant",
-    model: { variant: "dodecahedron", color: "#0a1520", wireColor: "#14b8a6" },
-  },
-  {
-    id: 4,
-    title: "Sci-Fi Artifact Render",
-    category: "Concept Art",
-    slug: "scifi-artifact",
-    model: {
-      variant: "octahedron",
-      color: "#150a1a",
-      wireColor: "#f97316",
-      wobble: true,
-    },
-  },
-];
-
 export default function ProjectsPreview() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
@@ -68,7 +27,7 @@ export default function ProjectsPreview() {
   const headlineText = previewContent?.headline ?? "Featured Projects";
 
   // Use first 4 projects from API or defaults
-  const projects = (content?.projects ?? DEFAULT_PROJECTS).slice(0, 4);
+  const projects = (content?.projects ?? []).slice(0, 4);
 
   useEffect(() => {
     if (!cardsRef.current) return;
@@ -136,11 +95,7 @@ export default function ProjectsPreview() {
                 <div className="aspect-[16/10] bg-white/[0.02] overflow-hidden relative">
                   <LightweightProjectViewer
                     modelFile={(project as any).modelFile}
-                    variant={project.model.variant as any}
-                    color={project.model.color}
-                    wireColor={project.model.wireColor}
                     autoRotateSpeed={0.4}
-                    scale={0.8}
                     className="!aspect-[16/10]"
                   />
                   {/* Category badge */}

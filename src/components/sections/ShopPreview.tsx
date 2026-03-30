@@ -19,35 +19,6 @@ const InlineModelPreview = dynamic(
   },
 );
 
-const DEFAULT_PRODUCTS = [
-  {
-    id: "1",
-    title: "Crystal Sphere Pack",
-    price: "$29",
-    category: "3D Model",
-    model: {
-      variant: "sphere",
-      color: "#0a1a1a",
-      wireColor: "#14b8a6",
-      distort: true,
-    },
-  },
-  {
-    id: "2",
-    title: "Geometric Shape Kit",
-    price: "$19",
-    category: "3D Models",
-    model: { variant: "dodecahedron", color: "#1a0f05", wireColor: "#f97316" },
-  },
-  {
-    id: "3",
-    title: "Abstract Torus Pack",
-    price: "$15",
-    category: "3D Model",
-    model: { variant: "torusKnot", color: "#0a0f1a", wireColor: "#14b8a6" },
-  },
-];
-
 export default function ShopPreview() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const content = useContent();
@@ -59,7 +30,7 @@ export default function ShopPreview() {
     "Production-ready models, shaders, and textures for your next project";
 
   // Use first 3 products from API or defaults
-  const products = (content?.products ?? DEFAULT_PRODUCTS).slice(0, 3);
+  const products = (content?.products ?? []).slice(0, 3);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -130,13 +101,8 @@ export default function ShopPreview() {
                 {/* 3D Product Preview */}
                 <div className="aspect-square bg-white/[0.02] relative overflow-hidden">
                   <InlineModelPreview
-                    variant={product.model.variant as any}
-                    color={product.model.color}
-                    wireColor={product.model.wireColor}
-                    distort={product.model.distort}
                     modelFile={(product as any).modelFile}
                     viewerSettings={(product as any).viewerSettings}
-                    scale={0.7}
                   />
                 </div>
 

@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "title": "Crystal Gemstone Collection",
+    "title": "Ahsan Burki",
     "category": "Product Viz",
     "description": "Photorealistic gemstone renders with caustic light simulation and precise facet geometry.",
     "slug": "crystal-gemstone",
@@ -27,7 +27,7 @@
       "wireColor": "#14b8a6",
       "distort": true
     },
-    "modelFile": "",
+    "modelFile": "/models/1774776529495_1772480918427_old_rusty_car.glb",
     "viewerSettings": {
       "cameraFov": 24,
       "modelScale": 0.4,
@@ -93,105 +93,6 @@
       "variant": "dodecahedron",
       "color": "#0a1520",
       "wireColor": "#14b8a6"
-    }
-  },
-  {
-    "id": 4,
-    "title": "Sci-Fi Artifact Render",
-    "category": "Concept Art",
-    "description": "Futuristic artifact concept with procedural textures and holographic material shaders.",
-    "slug": "scifi-artifact",
-    "year": "2024",
-    "client": "Independent",
-    "longDescription": "A futuristic artifact concept featuring procedural textures, holographic material shaders, and advanced displacement mapping for an otherworldly aesthetic.",
-    "tools": [
-      "Blender",
-      "Cycles",
-      "Substance Painter"
-    ],
-    "breakdown": [
-      "Concept",
-      "Modeling",
-      "Texturing",
-      "Lighting",
-      "Compositing"
-    ],
-    "model": {
-      "variant": "octahedron",
-      "color": "#150a1a",
-      "wireColor": "#f97316",
-      "wobble": true
-    }
-  },
-  {
-    "id": 5,
-    "title": "Twisted Knot Installation",
-    "category": "Art Installation",
-    "description": "Mathematical torus knot sculpture for a virtual art gallery with iridescent materials.",
-    "slug": "twisted-knot",
-    "year": "2023",
-    "client": "Virtual Gallery Lab",
-    "longDescription": "Mathematical torus knot sculpture designed for a virtual art gallery, featuring iridescent materials and dynamic lighting that shifts with viewer perspective.",
-    "tools": [
-      "Blender",
-      "Cycles",
-      "Three.js"
-    ],
-    "breakdown": [
-      "Math Geometry",
-      "Material Dev",
-      "Viewport Setup",
-      "Rendering"
-    ],
-    "model": {
-      "variant": "torusKnot",
-      "color": "#0a1a15",
-      "wireColor": "#14b8a6"
-    }
-  },
-  {
-    "id": 6,
-    "title": "Prismatic Cone Array",
-    "category": "Generative Art",
-    "description": "Generative cone formations with dynamic color shifts and procedural displacement.",
-    "slug": "prismatic-cone",
-    "year": "2023",
-    "client": "Independent",
-    "longDescription": "Generative cone formations created through algorithmic design, featuring dynamic color shifts, procedural displacement, and parametric control over every aspect of the composition.",
-    "tools": [
-      "Blender",
-      "Geometry Nodes",
-      "Python"
-    ],
-    "breakdown": [
-      "Algorithm Design",
-      "Geometry Nodes",
-      "Shading",
-      "Animation"
-    ],
-    "model": {
-      "variant": "cone",
-      "color": "#1a1005",
-      "wireColor": "#f97316",
-      "wobble": true
-    }
-  },
-  {
-    "id": 7,
-    "title": "Ahsan Burki",
-    "category": "kkkk",
-    "description": "",
-    "slug": "nothing",
-    "year": "2026",
-    "client": "",
-    "longDescription": "",
-    "tools": [],
-    "breakdown": [],
-    "model": {
-      "variant": "sphere",
-      "color": "#0a2020",
-      "wireColor": "#14b8a6",
-      "distort": true
     }
   }
 ]
