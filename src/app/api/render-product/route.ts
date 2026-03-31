@@ -35,7 +35,7 @@ async function uploadToReplicate(
   mimeType: string,
   apiToken: string
 ): Promise<string | null> {
-  const blob = new Blob([imageBuffer], { type: mimeType });
+  const blob = new Blob([new Uint8Array(imageBuffer)], { type: mimeType });
   const form = new FormData();
   form.append("content", blob, "product.png");
 
